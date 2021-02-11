@@ -1,4 +1,4 @@
-Betreff: {{ SUBJECT }}
+Subject: {{ SUBJECT }}
 
 Hallo {{ ADM_USERNAME }},
 

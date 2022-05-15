@@ -228,7 +228,7 @@ class main_controller
 			}
 
 			// let's check our inputs against the database..but only for unregistered user and only if so set in ACP
-			if (!$this->user->data['is_registered'] && ($this->config['contactadmin_username_chk'] || $this->config['contactadmin_email_chk']))
+			if (empty($this->user->data['is_registered']) && ($this->config['contactadmin_username_chk'] || $this->config['contactadmin_email_chk']))
 			{
 				if ($this->config['contactadmin_username_chk'] && $this->config['contactadmin_email_chk'])
 				{
@@ -259,8 +259,8 @@ class main_controller
 				}
 			}
 
-			// always check email addresses for validity but only if setting in ACP isn't set
-			if (!$this->config['contactadmin_email_check'])
+			// always check email addresses for validity but only if setting in ACP isn't set and only for non-registered users
+			if (!$this->config['contactadmin_email_check'] && empty($this->user->data['is_registered']))
 			{
 				$validate_email = phpbb_validate_email($data['email']);
 				if ($validate_email)
@@ -303,7 +303,7 @@ class main_controller
 			}
 
 			// Check for Privacy policy check
-			if ($this->config['contactadmin_gdpr'] && !$this->request->is_set('gdpr'))
+			if (empty($this->user->data['is_registered']) && $this->config['contactadmin_gdpr'] && !$this->request->is_set('gdpr'))
 			{
 				$error[] = $this->user->lang('CONTACT_PRIVACYPOLICY_ERROR');
 			}
@@ -327,7 +327,7 @@ class main_controller
 			{
 				$url = generate_board_url() . '/memberlist.' . $this->php_ext . '?mode=viewprofile&u=' . $this->user->data['user_id'];
 				$color = $this->user->data['user_colour'] ? '[color=#' . $this->user->data['user_colour'] . ']' . $this->user->data['username'] . '[/color]' : $this->user->data['username'];
-				$user_name = $this->user->data['is_registered'] ? '[url=' . $url . ']' . $color . '[/url]' : $data['username'];
+				$user_name = !empty($this->user->data['is_registered']) ? '[url=' . $url . ']' . $color . '[/url]' : $data['username'];
 			}
 			else
 			{
@@ -337,7 +337,7 @@ class main_controller
 			if (!in_array($this->config['contactadmin_method'], [$this->contact_constants['CONTACT_METHOD_EMAIL'], $this->contact_constants['CONTACT_METHOD_BOARD_DEFAULT']]))
 			{
 				// change the users stuff
-				if ($this->config['contactadmin_bot_poster'] == $this->contact_constants['CONTACT_POST_ALL'] || ($this->config['contactadmin_bot_poster'] == $this->contact_constants['CONTACT_POST_GUEST'] && !$this->user->data['is_registered']))
+				if ($this->config['contactadmin_bot_poster'] == $this->contact_constants['CONTACT_POST_ALL'] || ($this->config['contactadmin_bot_poster'] == $this->contact_constants['CONTACT_POST_GUEST'] && empty($this->user->data['is_registered'])))
 				{
 					$contact_perms = $this->contactadmin->contact_change_auth($this->config['contactadmin_bot_user']);
 				}
@@ -406,7 +406,10 @@ class main_controller
 				}
 
 				$subject = (!empty($data['contact_reason'])) ? $data['contact_reason'] : $data['contact_subject'];
-				$subject = ($this->user->data['user_id'] != ANONYMOUS) ? $subject . ' - ' . $this->language->lang('CONTACT_REGISTERED') : $subject . ' -  ' . $this->language->lang('CONTACT_GUEST');
+				if (in_array($this->config['contactadmin_method'], [$this->contact_constants['CONTACT_METHOD_POST'], $this->contact_constants['CONTACT_METHOD_PM']]))
+				{
+					$subject = ($this->user->data['user_id'] != ANONYMOUS) ? $subject . ' - ' . $this->language->lang('CONTACT_REGISTERED') : $subject . ' -  ' . $this->language->lang('CONTACT_GUEST');
+				}
 
 				switch ($this->config['contactadmin_method'])
 				{
@@ -533,6 +536,7 @@ class main_controller
 							$messenger->im($contact_users[$i]['user_jabber'], $contact_users[$i]['username']);
 							$messenger->from($board_contact);
 							$messenger->replyto($data['email']);
+							$messenger->subject($subject);
 
 							$messenger->assign_vars([
 								'ADM_USERNAME'	=> htmlspecialchars_decode($contact_users[$i]['username']),
@@ -567,7 +571,7 @@ class main_controller
 					$this->contactadmin->contact_change_auth('', 'restore', $contact_perms);
 				}
 
-				$message = $this->language->lang('CONTACT_MSG_SENT') . '<br /><br />' . $this->language->lang('RETURN_INDEX', '<a href="' . append_sid("{$this->root_path}index.$this->php_ext") . '">', '</a>');
+				$message = $this->language->lang('CONTACT_MSG_SENT') . '<br><br>' . $this->language->lang('RETURN_INDEX', '<a href="' . append_sid("{$this->root_path}index.$this->php_ext") . '">', '</a>');
 
 				return $this->helper->message($message);
 			}
@@ -651,7 +655,7 @@ class main_controller
 			'S_HIDDEN_FIELDS'		=> $s_hidden_fields,
 			'S_ERROR'				=> (isset($error) && count($error)) ? implode('<br />', $error) : '',
 			'S_CONTACT_ACTION'		=> $this->helper->route('rmcgirr83_contactadmin_displayform'),
-			'S_CONTACT_GDPR'		=> ($this->config['contactadmin_gdpr']) ? true : false,
+			'S_CONTACT_GDPR'		=> ($this->config['contactadmin_gdpr'] && empty($this->user->data['is_registered'])) ? true : false,
 		]);
 
 		// Send all data to the template file

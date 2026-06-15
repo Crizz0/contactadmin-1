@@ -76,11 +76,12 @@ $lang = array_merge($lang, [
 	'CONTACT_METHOD_EMAIL'			=> 'Email',
 	'CONTACT_METHOD_PM'				=> 'Private message',
 	'CONTACT_METHOD_POST'			=> 'Forum post',
+	'CONTACT_METHOD_BOARD_DEFAULT'	=> 'Board default email',
 
 	// Contact methods
 	'CONTACT_WHO_ALL_ADMINS'		=> 'All Admins',
 	'CONTACT_WHO_BOARD_FOUNDER'		=> 'Board Founder',
-	'CONTACT_WHO_BOARD_DEFAULT'	=> 'Board Default Email',
+	'CONTACT_WHO_BOARD_DEFAULT'		=> 'Board Default Email',
 
 	// Contact posters...user bot
 	'CONTACT_POST_NEITHER'			=> 'Neither',
@@ -92,4 +93,7 @@ $lang = array_merge($lang, [
 	'CONTACT_GDPR'	=> 'GDPR',
 	'CONTACT_GDPR_EXPLAIN' => 'If set yes, the user will be presented with a check box to acknowledge the boards privacy policy. The box must be checked for the contact form to be submitted',
 	'EMAIL_NOT_CONFIGURED' => 'Email isn’t configured for the board, please make a different selection for the contact method',
+
+	'CONTACT_FOUNDER'					=> 'Contact only board founder',
+	'CONTACT_FOUNDER_EXPLAIN'			=> 'If activated, only the board founder gets an email or private message.',
 ]);

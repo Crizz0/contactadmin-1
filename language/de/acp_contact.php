@@ -48,14 +48,14 @@ $lang = array_merge($lang, [
 	'CONTACT_ATTACHMENTS'				=> 'Dateianhänge erlaubt',
 	'CONTACT_ATTACHMENTS_EXPLAIN'		=> 'Sofern aktiviert werden Dateianhänge bei der Kontaktart „Forenbeitrag“ und „Private Nachricht" erlaubt.<br>Die Dateitypen entsprechen denen der Board-Einstellungen.<br><span style="color:red;">Wirkt sich nicht auf die Kontaktart „E-Mail“ aus.</span>',
 	'CONTACT_CONFIRM_GUESTS'			=> 'Bestätigungscode nur für Gäste',
-	'CONTACT_CONFIRM_GUESTS_EXPLAIN'	=> 'Wenn diese Einstellung aktiviert ist, müssen nur Gäste den Bestätigungscode ausfüllen (sofern Gäste das Formular nutzen dürfen).',
-	'CONTACT_FOUNDER'					=> 'Nur die Board-Gründer kontaktieren',
-	'CONTACT_FOUNDER_EXPLAIN'			=> 'Wenn dies aktiviert ist, bekommen nur die „Gründer“ des Forums eine E-Mail oder PN Benachrichtigung.',
-
+	'CONTACT_CONFIRM_GUESTS_EXPLAIN'	=> 'Wenn diese Option aktiviert ist, wird die visuelle Bestätigungscode nur Gästen angezeigt (sofern eingerichtet)',
+	'CONTACT_WHO'						=> 'Wer ist zu kontaktieren',
+	'CONTACT_WHO_EXPLAIN'				=> 'Wer soll via E-Mail oder PN kontaktiert werden',
 	'CONTACT_MAX_ATTEMPTS'				=> 'Maximale Anzahl von Versuchen',
 	'CONTACT_MAX_ATTEMPTS_EXPLAIN'		=> 'Wie viele Versuche haben die Benutzer den richtigen Bestätigungscode auszufüllen?<br>0 entspricht einer unbegrenzten Anzahl an Versuchen.',
 	'CONTACT_METHOD'					=> 'Kontaktart',
-	'CONTACT_METHOD_EXPLAIN'			=> 'Mit welcher Kontaktart sollen Benutzer in Kontakt treten können.<br><span style="color:red;">Wenn „E-Mail“ ausgewählt wird, sind Dateianhänge nicht möglich.</span>',
+	'CONTACT_METHOD_EXPLAIN'			=> 'Mit welcher Kontaktart sollen Benutzer in Kontakt treten können.',
+	'CONTACT_POST_OPTIONS'				=> 'Kontakt Beitrags- oder PN-Optionen',
 	'CONTACT_REASONS'					=> 'Kontaktgründe',
 	'CONTACT_REASONS_EXPLAIN'			=> 'Trage Gründe für den Kontakt ein, je Grund eine eigene Zeile.<br>Wenn du diese Funktion nicht verwenden willst, dann lasse dieses Feld leer.',
 	// Bot config options
@@ -65,7 +65,9 @@ $lang = array_merge($lang, [
 	'CONTACT_BOT_POSTER_EXPLAIN'		=> 'Wenn aktiviert, werden PNs und Beiträge durch den Kontaktbot-Benutzer erstellt. Wenn „Weder noch“ ausgewählt wurde, wird der Kontaktbot-Benutzer nicht verwendet. Dann werden Beiträge und PNs basierend auf den Einträgen in das Kontaktformular erstellt.',
 	'CONTACT_BOT_USER'					=> 'Kontaktbot-Benutzer',
 	'CONTACT_BOT_USER_EXPLAIN'			=> 'Gib den Benutzer ein, unter dessen Account die Nachrichten erstellen werden, sofern die Kontaktart „Private Nachricht” oder „Forenbeitrag” ausgewählt wurde.',
-	'CONTACT_NO_BOT_USER'				=> '<b>Die gewählte Kontakt-Bot-Benutzerkennung existiert nicht</b>',
+	'CONTACT_NO_BOT_USER'				=> '<strong>Der ausgewählte Benutzer als Kontaktbot existiert nicht</strong>',
+	'CONTACT_BOT_IS_BOT'				=> '<strong>Der ausgewählte Kontaktbot ist als Bot des Forums vorgesehen. Bist du sicher, dass du diesen Benutzer als Bot wählen willst?</strong>',
+	'CONTACT_BOT_IS_GUEST'				=> '<strong>Der ausgewählte Kontaktbot ist als Gast-Account des Forums vorgesehen. Bist du sicher, dass du diesen Benutzer als Bot wählen willst?</strong>',
 	'CONTACT_USERNAME_CHK'				=> 'Prüfe Benutzernamen Username',
 	'CONTACT_USERNAME_CHK_EXPLAIN'		=> 'Wenn aktiviert, werden die eingetragenen Benutzernamen mit der Mitgliederliste abgeglichen. Wenn eine Übereinstimmung gefunden wird, bekommt der Benutzer eine Fehlermeldung gezeigt und wird aufgefordert einen anderen Benutzernamen zu wählen.',
 	'CONTACT_EMAIL_CHK'					=> 'Prüfe E-Mail-Adresse',
@@ -77,6 +79,11 @@ $lang = array_merge($lang, [
 	'CONTACT_METHOD_POST'				=> 'Forenbeitrag',
 	'CONTACT_METHOD_BOARD_DEFAULT'		=> 'Board Default E-Mail',
 
+	// Contact methods
+	'CONTACT_WHO_ALL_ADMINS'		=> 'Alle Administratoren',
+	'CONTACT_WHO_BOARD_FOUNDER'		=> 'Board Gründer',
+	'CONTACT_WHO_BOARD_DEFAULT'		=> 'Board Standard-E-Mail',
+
 	// Contact posters...user bot
 	'CONTACT_POST_NEITHER'				=> 'Weder noch',
 	'CONTACT_POST_GUEST'				=> 'Nur Gäste',
@@ -85,5 +92,9 @@ $lang = array_merge($lang, [
 	// Overwrite the default contact page lang
 	'CONTACT_EXTENSION_ACTIVE'			=> '<span style="color:red;">Die Einstellungen hier spielen keine Rolle, da Sie derzeit die Kontaktverwaltungserweiterung aktiviert haben. Sie können dies nicht auf "aktiviert" setzen, ohne die Erweiterung vorher zu deaktivieren</span>',
 	'CONTACT_GDPR'						=> 'GDPR',
-	'CONTACT_GDPR_EXPLAIN' 				=> 'Wenn diese Option auf "Ja" gesetzt ist, wird dem Benutzer ein Auswahlkästchen angezeigt, in dem er die Datenschutzrichtlinie des Boards bestätigen muss. Das Auswahlkästchen muss markiert sein, damit das Kontaktformular gesendet werden kann.',
+	'CONTACT_GDPR_EXPLAIN' 				=> 'Wenn diese Option auf „Ja“ gesetzt ist, wird dem Benutzer ein Auswahlkästchen angezeigt, in dem er die Datenschutzrichtlinie des Boards bestätigen muss. Das Auswahlkästchen muss markiert sein, damit das Kontaktformular gesendet werden kann.',
+	'EMAIL_NOT_CONFIGURED' 				=> 'E-Mail-Versand ist in diesem Board nicht konfiguriert, bitte wähle eine andere Kontaktmöglichkeit.',
+
+	'CONTACT_FOUNDER'					=> 'Nur die Board-Gründer kontaktieren',
+	'CONTACT_FOUNDER_EXPLAIN'			=> 'Wenn dies aktiviert ist, bekommen nur die „Gründer“ des Forums eine E-Mail oder PN Benachrichtigung.',
 ]);
